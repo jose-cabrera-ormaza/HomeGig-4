@@ -1,0 +1,16 @@
+<%= bootstrap_form_with(model: [@job, @job.reviews.build], local: true) do |form| %>
+  <p class="field">
+    <%= form.select(:worker_id, @job.bids.map { |bid|
+      [User.find(bid.user_id).first_name + " " + User.find(bid.user_id).last_name, bid.user_id]
+    }) %>
+  </p>
+  <p>
+    <%= form.text_field :text, label: "Add written review", placeholder: "What did you like about the worker's work? What did you dislike?" %>
+  </p>
+  <p class="field">
+    <%= form.select(:rating, Review.ratings.values.map { |rating| [rating, rating] }) %>
+  </p>
+  <p>
+    <%= form.submit class: "btn btn-block btn-secondary" %>
+  </p>
+<% end %>
